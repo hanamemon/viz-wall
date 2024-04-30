@@ -1,0 +1,239 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Interactive Waves</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+	<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background: black;
+		}
+
+		#hello-world {
+			position: absolute;
+			color: white;
+			font-size: 48px;
+			z-index: 20;
+			/* Ensure text is above all */
+		}
+
+		canvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 5;
+			/* Lower than arrow and text */
+		}
+
+		#next-page {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			font-size: 24px;
+			color: white;
+			cursor: pointer;
+			z-index: 15;
+			/* Higher than canvas to ensure visibility */
+		}
+	</style>
+</head>
+
+<body>
+	<div id="hello-world">When AI Dreams</div>
+	<i id="next-page" class="fas fa-arrow-right" onclick="window.location.href='webcam.html'"></i>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+	<script>
+		let dots = [];
+
+		function setup() {
+			createCanvas(windowWidth, windowHeight);
+			for (let i = 0; i < 200; i++) {
+				dots.push(new Dot());
+			}
+		}
+
+		function draw() {
+			background(0);
+			dots.forEach(dot => {
+				dot.move();
+				dot.display();
+			});
+		}
+
+		class Dot {
+			constructor() {
+				this.x = random(width);
+				this.y = random(height);
+				this.size = random(5, 10);
+				this.speedX = random(-1, 1);
+				this.speedY = random(-1, 1);
+			}
+
+			move() {
+				this.x += this.speedX * noise(this.x * 0.01, this.y * 0.01);
+				this.y += this.speedY * noise(this.x * 0.01, this.y * 0.01);
+
+				if (mouseIsPressed) {
+					let dx = this.x - mouseX;
+					let dy = this.y - mouseY;
+					let distance = sqrt(dx * dx + dy * dy);
+					if (distance < 50) {
+						this.x += dx * 0.1;
+						this.y += dy * 0.1;
+					}
+				}
+			}
+
+			display() {
+				noStroke();
+				fill(255);
+				ellipse(this.x, this.y, this.size, this.size);
+			}
+		}
+
+		function windowResized() {
+			resizeCanvas(windowWidth, windowHeight);
+		}
+	</script>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>When AI Dreams</title>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Roboto:ital,wght@0,100;1,100&display=swap"
+		rel="stylesheet">
+	<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: black;
+			color: white;
+			font-family: 'Roboto', sans-serif;
+			overflow: hidden;
+		}
+
+		#title {
+			text-align: center;
+			position: absolute;
+			top: 20%;
+			width: 100%;
+		}
+
+		#title h1 {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 3rem;
+			color: #E0E0E0;
+			margin: 0;
+		}
+
+		#title p {
+			font-size: 1.2rem;
+			color: #BBBBBB;
+		}
+
+		#explore {
+			position: absolute;
+			bottom: 50px;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 1.2rem;
+			background: none;
+			border: 2px solid #FFFFFF;
+			padding: 12px 24px;
+			cursor: pointer;
+			transition: all 0.3s;
+			color: #FFFFFF;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		#explore:hover {
+			background-color: #FFFFFF;
+			color: black;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="title">
+		<h1>When AI Dreams</h1>
+		<p>Hana Memon</p>
+	</div>
+	<!--  HANA ADD LINK HERE-->
+	<a href="webcam.html"> <button id="explore">Explore</button> </a>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+	<script>
+		let particles = [];
+
+		function setup() {
+			createCanvas(windowWidth, windowHeight);
+			for (let i = 0; i < 100; i++) {
+				particles.push(new Particle());
+			}
+		}
+
+		function draw() {
+			background(0);
+			particles.forEach(p => {
+				p.update();
+				p.edges();
+				p.show();
+			});
+		}
+
+		class Particle {
+			constructor() {
+				this.pos = createVector(random(width), random(height));
+				this.vel = p5.Vector.random2D();
+				this.size = 10;
+			}
+
+			update() {
+				this.pos.add(this.vel);
+				this.vel.limit(2);
+			}
+
+			edges() {
+				if (this.pos.x < 0 || this.pos.x > width) {
+					this.vel.x *= -1;
+				}
+				if (this.pos.y < 0 || this.pos.y > height) {
+					this.vel.y *= -1;
+				}
+			}
+
+			show() {
+				noStroke();
+				fill('rgba(255, 255, 255, 0.5)');
+				circle(this.pos.x, this.pos.y, this.size * 2);
+			}
+		}
+
+		function windowResized() {
+			resizeCanvas(windowWidth, windowHeight);
+		}
+	</script>
+</body>
+
+</html>

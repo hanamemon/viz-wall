@@ -1,0 +1,121 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AI Surveillance Simulation</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+	<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #333;
+			font-family: 'Roboto Mono', monospace;
+		}
+
+		#monitor {
+			background: #000;
+			border-radius: 8px;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+			position: relative;
+			overflow: hidden;
+		}
+
+		#monitor::before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			width: calc(100% - 20px);
+			height: calc(100% - 20px);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			border-radius: 4px;
+		}
+
+		#screen {
+			padding: 20px;
+		}
+
+		canvas {
+			display: block;
+			/* Removes bottom margin/gap */
+		}
+
+		#controls {
+			position: absolute;
+			bottom: 10px;
+			left: 10px;
+			right: 10px;
+			text-align: center;
+		}
+
+		button {
+			padding: 8px 16px;
+			background: none;
+			border: 2px solid #fff;
+			color: white;
+			cursor: pointer;
+			border-radius: 4px;
+			transition: background-color 0.3s;
+		}
+
+		button:hover {
+			background-color: rgba(255, 255, 255, 0.2);
+		}
+	</style>
+</head>
+
+<body>
+	<div id="monitor">
+		<div id="screen">
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
+			<script>
+				let video;
+				let detections = [];
+
+				function setup() {
+					const canvas = createCanvas(640, 480);
+					canvas.parent('screen');
+					video = createCapture(VIDEO);
+					video.size(width, height);
+					video.hide(); // Hide the HTML video element
+
+					faceapi.nets.tinyFaceDetector.loadFromUri('/models').then(startVideo);
+				}
+
+				function startVideo() {
+					faceapi.detectAllFaces(video.elt, new faceapi.TinyFaceDetectorOptions()).then(results => {
+						detections = results;
+						setTimeout(() => startVideo(), 100);
+					});
+				}
+
+				function draw() {
+					background(0);
+					image(video, 0, 0, width, height);
+
+					detections.forEach(d => {
+						const {x, y, width, height} = d.detection.box;
+						noFill();
+						stroke(255, 0, 0);
+						strokeWeight(2);
+						rect(x, y, width, height);
+					});
+				}
+			</script>
+		</div>
+		<div id="controls">
+			<button onclick="toggleFilter()">Toggle Filter</button>
+		</div>
+	</div>
+</body>
+
+</html> -->

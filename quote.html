@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hana's Viz Wall</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+	<style>
+		body {
+			font-family: Helvetica, sans-serif;
+			margin: 0;
+			overflow: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		let inp;
+		let inputL;
+		let cols;
+		let txt = 15;
+
+		let font;
+
+		// function preload() {
+		//     font = loadFont("AktivGrotesk-Regular.ttf")
+		// }
+
+		function ease(p) {
+			return 3 * p * p - 2 * p * p * p;
+		}
+
+		function setup() {
+			createCanvas(windowWidth, windowHeight);
+			inp = "If inequity is woven into the very fabric of our society – it's everywhere – then each twist, coil and code is a chance for us to weave new practices, politics, patterns";
+			inputL = inp.length;
+			cols = 30;
+		}
+
+		function periodicFunction(p, seed, x, y) {
+			let radius = 0.5;
+			let sclX = 0.002;
+			let sclY = 0.005;
+			return 1 * noise(seed + radius * cos(TWO_PI * p), radius * sin(TWO_PI * p), sclX * x, sclY * y);
+		}
+
+		function offset(x, y) {
+			let mX = map(mouseX, 0, width, 0, width);
+			let mY = map(mouseY, 0, height, 0, height);
+			return 0.001 * dist(x, y, mX, mY);
+		}
+
+		function draw() {
+			background(0);
+
+			let t = mouseX * 1.0 / width;
+
+			for (var i = 0; i < inputL; i++) {
+				for (var j = 0; j < cols; j++) {
+					let marginX = 10;
+					let marginY = 100;
+
+					let x = map(i, 0, inputL - 1, marginX, width - marginX);
+					let y = map(j, 0, cols - 1, marginY, height - 10);
+
+					let dx = 10.0 * periodicFunction(frameCount * 0.01 - offset(x, y), 1000, x, y);
+					let dy = 500.0 * periodicFunction(frameCount * 0.01 - offset(x, y), 1234, x, y);
+
+					let m = dist(x, y, width / 2, height / 2);
+
+					let intensity = ease(constrain(map(y, 0, 1.2 * height, 1, 0), 0, 1), 3);
+
+					dx *= intensity;
+					dy *= intensity;
+
+					push();
+					textAlign(CENTER, CENTER);
+					translate(x + dx, y + dy);
+					fill(255)
+					//textFont(font);
+					textSize(txt);
+					text(inp[i], 0, 0);
+					pop();
+				}
+			}
+		}
+	</script>
+</body>
+
+</html>

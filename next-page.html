@@ -1,0 +1,166 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Soft Gradient Page</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;400&display=swap" rel="stylesheet">
+	<style>
+		@keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		body,
+		html {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: 'Roboto Mono', monospace;
+			overflow: hidden;
+			position: relative;
+			background: rgb(224, 174, 238);
+			background: radial-gradient(circle, rgba(224, 174, 238, 1) 0%, rgba(32, 102, 184, 1) 100%);
+		}
+
+		.message {
+			position: absolute;
+			text-align: center;
+			font-size: 24px;
+			padding: 1em;
+			max-width: 80%;
+			animation: fadeIn 5s ease-in-out infinite alternate;
+			font-weight: 400;
+			/* Increased font weight for better visibility */
+			color: white;
+			/* Changed text color to white */
+			z-index: 2;
+			/* Higher z-index to ensure visibility */
+		}
+	</style>
+</head>
+
+<body>
+	<div class="message">
+		What truly makes you happy?
+	</div>
+	<script>
+		const messages = [
+			"What truly makes you happy?",
+			"Have you smiled today?",
+			"What inspires you the most?",
+			"What is your life’s purpose?"
+		];
+		let index = 0;
+		const messageElement = document.querySelector('.message');
+
+		function randomPosition() {
+			const x = Math.random() * (window.innerWidth - messageElement.clientWidth);
+			const y = Math.random() * (window.innerHeight - messageElement.clientHeight);
+			messageElement.style.left = `${x}px`;
+			messageElement.style.top = `${y}px`;
+		}
+
+		setInterval(() => {
+			messageElement.style.opacity = 0;
+			setTimeout(() => {
+				if (index >= messages.length) index = 0;
+				messageElement.textContent = messages[index++];
+				randomPosition(); // Update position for new message
+				messageElement.style.opacity = 1;
+			}, 2500); // halfway through the fade cycle
+		}, 5000); // time for each message to stay visible
+	</script>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Life Questions</title>
+	<style>
+		body,
+		html {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: 'Arial', sans-serif;
+			background: linear-gradient(to bottom right, #005AA7, #FFFDE4);
+			overflow: hidden;
+			position: relative;
+		}
+
+		.message {
+			position: absolute;
+			color: white;
+			font-size: 24px;
+			opacity: 0;
+			transition: opacity 5s;
+		}
+
+		#nextPage {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			font-size: 24px;
+			cursor: pointer;
+			background: none;
+			border: none;
+			color: white;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="messagesContainer"></div>
+	<button id="nextPage" onclick="window.location.href='quote.html'">&#10145;</button> <!-- Unicode right arrow -->
+	<script>
+		const messages = [
+			"What is your purpose?",
+			"What makes you truly happy?",
+			"Where do you see yourself in five years?",
+			"What are your core values?",
+			"How do you define success?",
+			"What do you want to be remembered for?"
+		];
+
+		const messagesContainer = document.getElementById('messagesContainer');
+
+
+		messages.forEach((message, index) => {
+			const messageElement = document.createElement('div');
+			messageElement.textContent = message;
+			messageElement.classList.add('message');
+			messagesContainer.appendChild(messageElement);
+
+			setTimeout(() => {
+				positionMessage(messageElement);
+				messageElement.style.opacity = 1;
+			}, index * 1500 + 1000);
+		});
+
+		function positionMessage(element) {
+			const x = Math.random() * (window.innerWidth - element.clientWidth);
+			const y = Math.random() * (window.innerHeight - element.clientHeight);
+			element.style.left = `${x}px`;
+			element.style.top = `${y}px`;
+		}
+	</script>
+</body>
+
+</html>
